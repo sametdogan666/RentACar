@@ -16,16 +16,16 @@ namespace DataAccess.Concrete.InMemory
         {
             _cars = new List<Car>
             {
-                new Car{Id = 1, BrandId = 1, ColorId = 1, ModelYear = 2015, DailyPrice = 500, Description = "Manuel Vites"},
-                new Car{Id = 2, BrandId = 1, ColorId = 1, ModelYear = 2012, DailyPrice = 300, Description = "Otomatik Vites"},
-                new Car{Id = 3, BrandId = 2, ColorId = 1, ModelYear = 2017, DailyPrice = 600, Description = "Manuel Vites"},
-                new Car{Id = 4, BrandId = 2, ColorId = 2, ModelYear = 2019, DailyPrice = 700, Description = "Otomatik Vites"}
+                new Car{ID = 1, BrandId = 1, ColorId = 1, ModelYear = 2015, DailyPrice = 500, Description = "Manuel Vites"},
+                new Car{ID = 2, BrandId = 1, ColorId = 1, ModelYear = 2012, DailyPrice = 300, Description = "Otomatik Vites"},
+                new Car{ID = 3, BrandId = 2, ColorId = 1, ModelYear = 2017, DailyPrice = 600, Description = "Manuel Vites"},
+                new Car{ID = 4, BrandId = 2, ColorId = 2, ModelYear = 2019, DailyPrice = 700, Description = "Otomatik Vites"}
             };
         }
 
         public List<Car> GetById(int id)
         {
-            return _cars.Where(c => c.Id == id).ToList();
+            return _cars.Where(c => c.ID == id).ToList();
         }
 
         public List<Car> GetAll()
@@ -40,7 +40,7 @@ namespace DataAccess.Concrete.InMemory
 
         public void Update(Car car)
         {
-            Car carToUpdate = _cars.SingleOrDefault(c =>c.Id == car.Id);
+            Car carToUpdate = _cars.SingleOrDefault(c =>c.ID == car.ID);
             carToUpdate.BrandId = car.BrandId;
             carToUpdate.ColorId = car.ColorId;
             carToUpdate.ModelYear = car.ModelYear;
@@ -51,7 +51,7 @@ namespace DataAccess.Concrete.InMemory
 
         public void Delete(Car car)
         {
-            Car carToDelete = _cars.SingleOrDefault(c => c.Id == car.Id);
+            Car carToDelete = _cars.SingleOrDefault(c => c.ID == car.ID);
             _cars.Remove(carToDelete);
         }
     }
