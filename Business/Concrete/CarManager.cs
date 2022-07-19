@@ -36,6 +36,28 @@ namespace Business.Concrete
             }
         }
 
+        public void Delete(Car car)
+        {
+            _carDal.Delete(car);
+        }
+
+        public void Update(Car car)
+        {
+            if (car.DailyPrice > 0)
+            {
+                _carDal.Update(car);
+            }
+            else
+            {
+                Console.WriteLine("Enter the daily price of the car at a greater value than zero.");
+            }
+        }
+
+        public Car GetById(int id)
+        {
+            return _carDal.Get(c => c.ID == id);
+        }
+
         public List<Car> GetCarsByBrandId(int id)
         {
             return _carDal.GetAll(c => c.BrandId == id);
