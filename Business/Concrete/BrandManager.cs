@@ -4,6 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Business.Abstract;
+using Business.Constants;
+using Core.Utilities.Results;
+using Core.Utilities.Results.Abstract;
+using Core.Utilities.Results.Concrete;
 using DataAccess.Abstract;
 using Entities.Concrete;
 
@@ -18,43 +22,40 @@ namespace Business.Concrete
             _brandDal = brandDal;
         }
 
-        public List<Brand> GetAll()
+        public IDataResult<List<Brand>> GetAll()
         {
-            return _brandDal.GetAll();
+            return new SuccessDataResult<List<Brand>>(_brandDal.GetAll(), Messages.BrandListed);
         }
 
-        public void Add(Brand brand)
+        public IResult Add(Brand brand)
         {
-            if (brand.BrandName.Length > 2)
+            if (brand.BrandName.Length <= 2)
             {
-               _brandDal.Add(brand);
+                return new ErrorResult(Messages.BrandNameInvalid);
             }
-            else
-            {
-                Console.WriteLine("The brand name must consist of at least 2 characters.");
-            }
+            _brandDal.Add(brand);
+            return new SuccessResult(Messages.BrandAdded);
         }
 
-        public void Delete(Brand brand)
+        public IResult Delete(Brand brand)
         {
             _brandDal.Delete(brand);
+            return new SuccessResult(Messages.BrandDeleted);
         }
 
-        public void Update(Brand brand)
+        public IResult Update(Brand brand)
         {
-            if (brand.BrandName.Length > 2)
+            if (brand.BrandName.Length <= 2)
             {
-                _brandDal.Update(brand);
+                return new ErrorResult(Messages.BrandUpdatedInvalid);
             }
-            else
-            {
-                Console.WriteLine("The brand name must consist of at least 2 characters.");
-            }
+            _brandDal.Update(brand);
+            return new SuccessResult(Messages.BrandUpdated);
         }
 
-        public Brand GetById(int id)
+        public IDataResult<Brand> GetById(int id)
         {
-            return _brandDal.Get(b => b.ID == id);
+            return new SuccessDataResult<Brand>(_brandDal.Get(b => b.ID == id),Messages.BrandIDListed);
         }
     }
 }
